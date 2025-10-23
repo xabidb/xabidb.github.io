@@ -1,0 +1,89 @@
+body   {
+    text-align: center;
+    background-color: #fffffffb;
+    font-family: roboto;
+    color: #191919;
+}
+h1     {
+    font-size: xx-large;
+    color: #2c496e;
+}
+h2     {
+    font-size: x-large;
+    color: #2c496e;
+}
+h3     {
+    font-size: medium;
+}
+p      {
+    font-size: 14px;
+    line-height: 1.75;
+}
+ul     {
+    list-style-type: none;
+    display: flex;
+}
+li     {
+    width: 20%;
+    font-size: medium;
+    margin: auto;
+    justify-content: space-evenly;
+    font-size: 14px;
+}
+.header {
+    width: device-width;
+    margin-bottom: 50px;
+}
+.contact-info   {
+    width: device-width;
+    display: flex;
+    height: auto;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+.email, .linkedin, .phone {
+    width: 20%;
+    font-size: medium;
+    margin: auto;
+    justify-content: space-evenly;
+}
+.experience, .education {
+    width: 70%;
+    margin: auto;
+    text-align: left;
+    padding-bottom: 20px;
+}
+.skillset {
+    width: 70%;
+    margin: auto;
+    text-align: left;
+    padding-bottom: 50px;
+}
+@media only screen and (max-width: 1100px) {
+    .header {
+        width: 70%;
+        margin: auto;
+        margin-bottom: 50px;
+        text-align: left;
+    }
+    .contact-info {
+        display: block;
+    }
+    .email, .linkedin, .phone {
+        width: 70%;
+        text-align: left;
+    }
+    ul {
+        width: 70%;
+        text-align: left;
+        margin-left: 0;
+        display: block;
+        padding-left: 0;
+    }
+    li {
+        width: auto;
+        padding-bottom: 10px;
+        text-align: left;
+        margin-bottom: 1.75;
+    }
+}
