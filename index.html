@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Week 10 Lab</title>
+</head>
+<body>
+    <header>
+        <h1>Week 10 Lab</h1>
+    </header>
+    <div class="container">
+        <h1>Average calculator</h1>
+        <!-- STEP 1: Ask for number of subjects -->
+        <div id="step1">
+            <p>How many subjects do you have?</p>
+            <input id="subjectCount" type="number" placeholder="5"/>
+            <br><br/>
+            <button type="button" onclick="createInputs()">Next</button>
+            <br><br/>
+        </div>
+        <!-- STEP 2: The Form (Hidden at first) -->
+        <div id="step2" class="hidden">
+            <p>Enter your marks for each subject:</p>
+            <div id="input-area"></div>
+            <br><br/>
+            <button type="button" onclick="calculateGrade()">Get My Grade</button>
+            <br><br/>
+        </div>
+        <!-- STEP 3: The Result (Hidden at first) -->
+        <div id="step3" class="hidden result-box">
+            <h3>Results:</h3>
+            <p>Individual marks: <b id="showMarks">0</b></p>
+            <p>Total score: <b id="showTotal">0</b></p>
+            <p>Average: <b id="showAverage">0</b></p>
+            <p>Final Grade: <b id="showFinal">-</b></p>
+            <button type="button" onclick="location.reload()">Start Over</button>
+            <br><br/>
+        </div>
+    </div>
+    <div class="container">
+        <div id="game">
+            <h1>Rock, Paper, Scissors</h1>
+            <button id="rock" type="button" style="font-size: 1.5rem;">🗿</button>
+            <button id="paper" type="button" style="font-size: 1.5rem;">📄</button>
+            <button id="scissors" type="button" style="font-size: 1.5rem;">✂️</button>
+            <p id="result-message">Choose you move!</p>
+        </div>
+        <div id="game-over" class="hidden result-box">
+            <h1>Game Over</h1>
+            <p id="final-picks"></p>
+            <button type="button" onclick="location.reload()">Start Over</button>
+        </div>
+    </div>
+    <script src="grades.js"></script>
+    <script src="rockPaperScissors.js"></script>
+</body>
+</html>
