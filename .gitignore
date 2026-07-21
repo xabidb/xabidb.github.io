@@ -1,0 +1,32 @@
+# Data Privacy & ML Models
+backend/data/
+*.csv
+*.parquet
+*.ipynb
+*.pkl
+*.h5
+*.db
+*.sqlite
+*.sqlite3
+.ipynb_checkpoints/
+
+# Environment variables / secrets
+.env
+.env.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.pytest_cache/
+
+# Node / Javascript
+node_modules/
+dist/
+.eslintcache
+
+# OS files
+.DS_Store
+Thumbs.db
+
