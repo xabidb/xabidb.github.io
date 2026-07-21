@@ -27,50 +27,29 @@ function MainApp() {
   const [isRetraining, setIsRetraining] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
-  // Load API health and default forecast on mount
+  // Load health, real-time forecast, and evaluation data with 5s polling interval
   useEffect(() => {
-    async function loadInitialData() {
+    async function loadData() {
       const health = await fetchHealthStatus();
-      const connected = health.status === 'ok';
-      setIsApiConnected(connected);
+      setIsApiConnected(health);
 
-      if (connected) {
-        const data = await fetchLatestForecast();
-        if (data) {
-          setForecastData(data);
-        }
-      }
-    }
-    loadInitialData();
+      const latestFc = await fetchLatestForecast();
+      if (latestFc) setForecastData(latestFc);
 
-    const interval = setInterval(async () => {
-      const health = await fetchHealthStatus();
-      const connected = health.status === 'ok';
-      setIsApiConnected(connected);
-      if (connected && !forecastData) {
-        const data = await fetchLatestForecast();
-        if (data) setForecastData(data);
-      }
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [forecastData]);
-
-  // Fetch evaluation split data dynamically based on active screen
-  useEffect(() => {
-    async function loadEvaluation() {
-      if (activeScreen === '24h' && !evalData24h) {
+      if (activeScreen === '24h') {
         const data = await fetchEvaluationData('24h');
         if (data) setEvalData24h(data);
-      } else if (activeScreen === '72h' && !evalData72h) {
+      } else if (activeScreen === '72h') {
         const data = await fetchEvaluationData('72h');
         if (data) setEvalData72h(data);
       }
     }
-    if (isApiConnected) {
-      loadEvaluation();
-    }
-  }, [activeScreen, isApiConnected, evalData24h, evalData72h]);
+
+    loadData();
+    const interval = setInterval(loadData, 5000);
+    return () => clearInterval(interval);
+  }, [activeScreen]);
+
 
   const handleRetrain = async () => {
     setIsRetraining(true);
