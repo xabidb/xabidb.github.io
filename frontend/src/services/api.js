@@ -1,7 +1,5 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? 'http://localhost:8000/api/v1' : '/api/v1');
 
-
-
 let authToken = localStorage.getItem('staffopt_token') || null;
 
 export function setAuthToken(token) {
@@ -10,6 +8,7 @@ export function setAuthToken(token) {
     localStorage.setItem('staffopt_token', token);
   } else {
     localStorage.removeItem('staffopt_token');
+    localStorage.removeItem('staffopt_demo_user');
   }
 }
 
@@ -26,18 +25,47 @@ function getAuthHeaders(extraHeaders = {}) {
 }
 
 export async function loginUser(email, password) {
-  const res = await fetch(`${API_BASE_URL}/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password }),
-  });
-  if (!res.ok) {
-    const errorData = await res.json().catch(() => ({ detail: 'Authentication failed' }));
-    throw new Error(errorData.detail || 'Login failed');
+  // 1. Try real FastAPI backend authentication if available
+  try {
+    const res = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setAuthToken(data.access_token);
+      return data;
+    }
+  } catch (err) {
+    console.warn('Backend API server unreachable, falling back to client-side demo authentication.');
   }
-  const data = await res.json();
-  setAuthToken(data.access_token);
-  return data;
+
+  // 2. Client-side static demo authentication fallback (for GitHub Pages / offline hosting)
+  const cleanEmail = (email || '').toLowerCase().trim();
+  const demoAccounts = {
+    'admin@explorium.io': { password: 'adminpassword', role: 'admin', full_name: 'System Administrator' },
+    'manager@explorium.io': { password: 'managerpassword', role: 'manager', full_name: 'Store Manager' },
+    'viewer@explorium.io': { password: 'viewerpassword', role: 'viewer', full_name: 'Guest Viewer' },
+  };
+
+  const account = demoAccounts[cleanEmail];
+  if (account && account.password === password) {
+    const demoToken = `demo_token_${account.role}_${Date.now()}`;
+    const userPayload = {
+      id: 1,
+      email: cleanEmail,
+      full_name: account.full_name,
+      role: account.role,
+      is_active: true,
+      created_at: new Date().toISOString(),
+    };
+    setAuthToken(demoToken);
+    localStorage.setItem('staffopt_demo_user', JSON.stringify(userPayload));
+    return { access_token: demoToken, token_type: 'bearer', user: userPayload };
+  }
+
+  throw new Error('Incorrect email or password. Demo accounts: admin@explorium.io, manager@explorium.io, or viewer@explorium.io.');
 }
 
 export async function fetchCurrentUser() {
@@ -46,15 +74,20 @@ export async function fetchCurrentUser() {
     const res = await fetch(`${API_BASE_URL}/auth/me`, {
       headers: getAuthHeaders(),
     });
-    if (!res.ok) {
-      setAuthToken(null);
-      return null;
+    if (res.ok) {
+      return await res.json();
     }
-    return await res.json();
   } catch (err) {
-    console.error('Error fetching current user:', err);
-    return null;
+    // Backend offline fallback
   }
+
+  const savedDemo = localStorage.getItem('staffopt_demo_user');
+  if (savedDemo) {
+    try {
+      return JSON.parse(savedDemo);
+    } catch (e) {}
+  }
+  return null;
 }
 
 export async function fetchHealthStatus() {
