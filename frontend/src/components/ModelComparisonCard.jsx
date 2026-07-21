@@ -25,17 +25,17 @@ export default function ModelComparisonCard({ horizon = '24h', metricsData }) {
   const data = metricsData || (horizon === '24h' ? defaultData24h : defaultData72h);
 
   return (
-    <div className="bg-[#3b3b3b] p-6 rounded-lg border border-[#444444] shadow-md">
-      {/* Header & Legend */}
+    <div className="bg-[#363636] p-6 rounded-xl border border-[#454545] shadow-lg">
+      {/* Header & Legend matching Figma Demo 4 */}
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-lg font-semibold text-white">Model Comparison</h3>
-        <div className="flex items-center gap-4 text-xs font-medium">
+        <h3 className="text-base font-bold text-white">Model Comparison</h3>
+        <div className="flex items-center gap-4 text-[11px] font-bold">
           <div className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#7173e2]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#6c5ce7]" />
             <span className="text-gray-300">MAE</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#edc24a]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#f9b233]" />
             <span className="text-gray-300">RMSE</span>
           </div>
           <div className="flex items-center gap-1.5">
@@ -46,23 +46,24 @@ export default function ModelComparisonCard({ horizon = '24h', metricsData }) {
       </div>
 
       {/* Bar Chart */}
-      <div className="h-56 w-full">
+      <div className="h-60 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#444444" vertical={false} />
-            <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} />
-            <YAxis stroke="#888888" fontSize={12} tickLine={false} />
+          <BarChart data={data} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#454545" vertical={true} horizontal={false} />
+            <XAxis dataKey="name" stroke="#999999" fontSize={11} tickLine={false} axisLine={false} />
+            <YAxis stroke="#999999" fontSize={11} tickLine={false} axisLine={false} domain={[0, 100]} ticks={[0, 25, 50, 100]} />
             <Tooltip
               contentStyle={{
-                backgroundColor: '#2b2b2b',
+                backgroundColor: '#242424',
                 borderColor: '#555555',
                 borderRadius: '8px',
                 color: '#fff',
+                fontSize: '12px',
               }}
             />
-            <Bar dataKey="MAE" fill="#7173e2" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="RMSE" fill="#edc24a" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="R2" fill="#e62b76" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="MAE" fill="#6c5ce7" radius={[4, 4, 0, 0]} maxBarSize={18} />
+            <Bar dataKey="RMSE" fill="#f9b233" radius={[4, 4, 0, 0]} maxBarSize={18} />
+            <Bar dataKey="R2" fill="#e62b76" radius={[4, 4, 0, 0]} maxBarSize={18} />
           </BarChart>
         </ResponsiveContainer>
       </div>

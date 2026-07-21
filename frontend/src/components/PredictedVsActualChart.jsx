@@ -1,8 +1,8 @@
 import React from 'react';
 import {
   ResponsiveContainer,
-  AreaChart,
-  Area,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   Tooltip,
@@ -19,7 +19,7 @@ export default function PredictedVsActualChart({ data }) {
         const parts = item.date.split('-');
         if (parts.length === 3) {
           const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-          formattedDate = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          formattedDate = d.toLocaleDateString('en-US', { month: 'short' });
         }
       }
       return {
@@ -32,28 +32,28 @@ export default function PredictedVsActualChart({ data }) {
   }, [data]);
 
   const chartData = formattedData || [
-    { date: 'Sep 10', actual: 45, predicted: 42 },
-    { date: 'Oct 15', actual: 58, predicted: 54 },
-    { date: 'Nov 20', actual: 38, predicted: 41 },
-    { date: 'Dec 05', actual: 72, predicted: 68 },
-    { date: 'Jan 12', actual: 64, predicted: 65 },
-    { date: 'Feb 18', actual: 82, predicted: 79 },
-    { date: 'Mar 22', actual: 95, predicted: 91 },
-    { date: 'Apr 10', actual: 61, predicted: 64 },
-    { date: 'May 04', actual: 88, predicted: 84 },
-    { date: 'Jun 19', actual: 76, predicted: 78 },
-    { date: 'Jul 25', actual: 110, predicted: 104 },
-    { date: 'Aug 30', actual: 125, predicted: 118 },
+    { date: 'Sep', actual: 25, predicted: 15 },
+    { date: 'Oct', actual: 48, predicted: 22 },
+    { date: 'Nov', actual: 18, predicted: 28 },
+    { date: 'Dec', actual: 32, predicted: 12 },
+    { date: 'Jan', actual: 55, predicted: 25 },
+    { date: 'Feb', actual: 10, predicted: 32 },
+    { date: 'Mar', actual: 42, predicted: 12 },
+    { date: 'Apr', actual: 28, predicted: 32 },
+    { date: 'May', actual: 20, predicted: 60 },
+    { date: 'Jun', actual: 28, predicted: 25 },
+    { date: 'Jul', actual: 12, predicted: 30 },
+    { date: 'Aug', actual: 50, predicted: 55 },
   ];
 
   return (
-    <div className="bg-[#3b3b3b] p-6 rounded-lg border border-[#444444] shadow-md">
-      {/* Header & Legend */}
-      <div className="flex justify-between items-center mb-6">
-        <h3 className="text-lg font-semibold text-white">Predicted vs Actual</h3>
-        <div className="flex items-center gap-6 text-xs font-medium">
+    <div className="bg-[#363636] p-6 rounded-xl border border-[#454545] shadow-lg">
+      {/* Header & Legend matching Figma Demo 4 */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
+        <h3 className="text-base font-bold text-white">Predicted vs Actual</h3>
+        <div className="flex items-center gap-5 text-[11px] font-bold tracking-wider">
           <div className="flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#edc24a]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#f9b233]" />
             <span className="text-gray-300">ACTUAL WALK-INS</span>
           </div>
           <div className="flex items-center gap-2">
@@ -63,48 +63,39 @@ export default function PredictedVsActualChart({ data }) {
         </div>
       </div>
 
-      {/* Chart */}
-      <div className="h-64 w-full">
+      {/* Line Chart */}
+      <div className="h-72 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-            <defs>
-              <linearGradient id="colorActual" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#edc24a" stopOpacity={0.35} />
-                <stop offset="95%" stopColor="#edc24a" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="colorPredicted" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#e62b76" stopOpacity={0.35} />
-                <stop offset="95%" stopColor="#e62b76" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#444444" vertical={false} />
-            <XAxis dataKey="date" stroke="#888888" fontSize={11} tickLine={false} interval="preserveStartEnd" />
-            <YAxis stroke="#888888" fontSize={11} tickLine={false} />
+          <LineChart data={chartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#454545" vertical={true} horizontal={false} />
+            <XAxis dataKey="date" stroke="#999999" fontSize={11} tickLine={false} axisLine={false} />
+            <YAxis stroke="#999999" fontSize={11} tickLine={false} axisLine={false} domain={[0, 100]} ticks={[0, 25, 50, 100]} />
             <Tooltip
               contentStyle={{
-                backgroundColor: '#2b2b2b',
+                backgroundColor: '#242424',
                 borderColor: '#555555',
                 borderRadius: '8px',
                 color: '#fff',
+                fontSize: '12px',
               }}
             />
-            <Area
+            <Line
               type="monotone"
               dataKey="actual"
-              stroke="#edc24a"
-              strokeWidth={4}
-              fillOpacity={1}
-              fill="url(#colorActual)"
+              stroke="#f9b233"
+              strokeWidth={3}
+              dot={false}
+              activeDot={{ r: 6, fill: '#f9b233' }}
             />
-            <Area
+            <Line
               type="monotone"
               dataKey="predicted"
               stroke="#e62b76"
-              strokeWidth={4}
-              fillOpacity={0}
-              fill="url(#colorActual)"
+              strokeWidth={3}
+              dot={false}
+              activeDot={{ r: 6, fill: '#e62b76' }}
             />
-          </AreaChart>
+          </LineChart>
         </ResponsiveContainer>
       </div>
     </div>
