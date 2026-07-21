@@ -4,6 +4,6 @@
   "description": "Explorium StaffOpt V2 - AI/ML Visitor Footfall Forecasting & Staff Planning Engine",
   "scripts": {
     "build": "npm --prefix frontend run build",
-    "build:deploy": "npm run build && powershell -Command \"Copy-Item -Path 'frontend\\dist\\index.html' -Destination 'index.html' -Force ; Copy-Item -Path 'frontend\\dist\\assets' -Destination '.' -Recurse -Force\""
+    "build:deploy": "npm run build && powershell -Command \"Remove-Item -Path 'assets\\*' -Force ; Copy-Item -Path 'frontend\\dist\\assets\\*' -Destination 'assets' -Force ; Copy-Item -Path 'frontend\\dist\\index.html' -Destination 'index.html' -Force\""
   }
 }
