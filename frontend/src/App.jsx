@@ -7,6 +7,8 @@ import ModelComparisonCard from './components/ModelComparisonCard';
 import TopFeaturesCard from './components/TopFeaturesCard';
 import ForecastStaffingScreen from './components/ForecastStaffingScreen';
 import LoginModal from './components/LoginModal';
+import LoginScreen from './components/LoginScreen';
+
 
 import { AuthProvider } from './context/AuthContext';
 import {
@@ -232,7 +234,13 @@ function MainApp() {
           {activeScreen === 'forecast' && (
             <ForecastStaffingScreen forecastData={forecastData} />
           )}
+
+          {/* Screen 3: User Authentication & Role Permissions */}
+          {activeScreen === 'login' && (
+            <LoginScreen onLoginSuccess={() => setActiveScreen('24h')} />
+          )}
         </main>
+
       </div>
     </div>
   );

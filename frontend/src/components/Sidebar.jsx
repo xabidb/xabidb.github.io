@@ -1,12 +1,14 @@
 import React from 'react';
-import { AreaChart, BarChart2, Calendar, Activity, Zap } from 'lucide-react';
+import { AreaChart, BarChart2, Calendar, ShieldCheck, Zap } from 'lucide-react';
 
 export default function Sidebar({ activeScreen, setActiveScreen, isApiConnected }) {
   const menuItems = [
     { id: '24h', label: '24h Model Performance', icon: AreaChart },
     { id: '72h', label: '72h Model Performance', icon: BarChart2 },
     { id: 'forecast', label: 'Daily Forecast & Staffing', icon: Calendar },
+    { id: 'login', label: 'Sign In / Account', icon: ShieldCheck },
   ];
+
 
   return (
     <div className="w-64 bg-[#2b2b2b] border-r border-[#3b3b3b] h-screen flex flex-col justify-between shrink-0">

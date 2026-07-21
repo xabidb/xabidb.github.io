@@ -12,8 +12,12 @@ export default function Header({ activeScreen, bestModel, onRetrain, isRetrainin
     if (activeScreen === '72h') {
       return `Current 72h Model: ${bestModel || 'Random Forest'}`;
     }
-    return 'Daily Forecast & Staff Headcount Suggestions';
+    if (activeScreen === 'forecast') {
+      return 'Daily Forecast & Staff Headcount Suggestions';
+    }
+    return 'User Authentication & Role Permissions';
   };
+
 
   const showRetrain = activeScreen === '24h' || activeScreen === '72h';
   const isAdmin = hasRole('admin');
