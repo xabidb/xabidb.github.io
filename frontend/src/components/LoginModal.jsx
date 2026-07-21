@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { ShieldCheck, Lock, Mail, User, AlertCircle, LogIn, Sparkles } from 'lucide-react';
+import { ShieldCheck, Lock, Mail, AlertCircle, LogIn, Sparkles } from 'lucide-react';
 
 export default function LoginModal({ isOpen, onClose }) {
   const { login } = useAuth();
@@ -25,19 +25,10 @@ export default function LoginModal({ isOpen, onClose }) {
     }
   };
 
-  const handleQuickLogin = async (demoEmail, demoPassword) => {
+  const handleFillDemo = (demoEmail, demoPassword) => {
     setEmail(demoEmail);
     setPassword(demoPassword);
     setError('');
-    setIsSubmitting(true);
-    try {
-      await login(demoEmail, demoPassword);
-      onClose();
-    } catch (err) {
-      setError(err.message || 'Quick login failed.');
-    } finally {
-      setIsSubmitting(false);
-    }
   };
 
   return (
@@ -63,25 +54,25 @@ export default function LoginModal({ isOpen, onClose }) {
         </div>
 
         <div className="p-6 space-y-6">
-          {/* Quick Demo Login Cards */}
+          {/* Quick Demo Autofill Buttons */}
           <div>
             <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
-              <Sparkles className="h-3.5 w-3.5 text-[#fcb712]" /> 1-Click Quick Demo Login
+              <Sparkles className="h-3.5 w-3.5 text-[#fcb712]" /> Autofill Demo Credentials
             </label>
             <div className="grid grid-cols-3 gap-2">
               <button
                 type="button"
-                onClick={() => handleQuickLogin('admin@explorium.io', 'adminpassword')}
-                className="p-2.5 bg-[#3b3b3b] hover:bg-[#fcb712]/20 border border-[#444444] hover:border-[#fcb712] rounded-lg transition-all text-left flex flex-col justify-between group"
+                onClick={() => handleFillDemo('admin@explorium.io', 'adminpassword')}
+                className="p-2.5 bg-[#3b3b3b] hover:bg-[#fcb712]/20 border border-[#444444] hover:border-[#fcb712] rounded-lg transition-all text-left flex flex-col justify-between group cursor-pointer"
               >
                 <span className="text-xs font-bold text-[#fcb712] group-hover:text-white">Admin</span>
-                <span className="text-[10px] text-gray-400 mt-1">Full Control</span>
+                <span className="text-[10px] text-gray-400 mt-1">Full Access</span>
               </button>
 
               <button
                 type="button"
-                onClick={() => handleQuickLogin('manager@explorium.io', 'managerpassword')}
-                className="p-2.5 bg-[#3b3b3b] hover:bg-indigo-500/20 border border-[#444444] hover:border-indigo-400 rounded-lg transition-all text-left flex flex-col justify-between group"
+                onClick={() => handleFillDemo('manager@explorium.io', 'managerpassword')}
+                className="p-2.5 bg-[#3b3b3b] hover:bg-indigo-500/20 border border-[#444444] hover:border-indigo-400 rounded-lg transition-all text-left flex flex-col justify-between group cursor-pointer"
               >
                 <span className="text-xs font-bold text-indigo-400 group-hover:text-white">Manager</span>
                 <span className="text-[10px] text-gray-400 mt-1">Schedules</span>
@@ -89,8 +80,8 @@ export default function LoginModal({ isOpen, onClose }) {
 
               <button
                 type="button"
-                onClick={() => handleQuickLogin('viewer@explorium.io', 'viewerpassword')}
-                className="p-2.5 bg-[#3b3b3b] hover:bg-emerald-500/20 border border-[#444444] hover:border-emerald-400 rounded-lg transition-all text-left flex flex-col justify-between group"
+                onClick={() => handleFillDemo('viewer@explorium.io', 'viewerpassword')}
+                className="p-2.5 bg-[#3b3b3b] hover:bg-emerald-500/20 border border-[#444444] hover:border-emerald-400 rounded-lg transition-all text-left flex flex-col justify-between group cursor-pointer"
               >
                 <span className="text-xs font-bold text-emerald-400 group-hover:text-white">Viewer</span>
                 <span className="text-[10px] text-gray-400 mt-1">Read Only</span>
@@ -101,7 +92,7 @@ export default function LoginModal({ isOpen, onClose }) {
           <div className="relative flex items-center justify-center">
             <div className="border-t border-[#444444] w-full"></div>
             <span className="bg-[#2b2b2b] px-3 text-[11px] font-semibold text-gray-500 uppercase absolute">
-              Or Sign In Manually
+              Sign In
             </span>
           </div>
 
@@ -147,7 +138,7 @@ export default function LoginModal({ isOpen, onClose }) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-2.5 bg-[#fcb712] hover:bg-[#e0a20f] text-black font-bold text-xs uppercase rounded-lg shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full py-2.5 bg-[#fcb712] hover:bg-[#e0a20f] text-black font-bold text-xs uppercase rounded-lg shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
             >
               <LogIn className="h-4 w-4" />
               {isSubmitting ? 'Authenticating...' : 'Sign In'}
