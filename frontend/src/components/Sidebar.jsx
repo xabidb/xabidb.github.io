@@ -92,16 +92,19 @@ export default function Sidebar({ activeScreen, setActiveScreen, isApiConnected 
       <div className="p-4 border-t border-[#e5a024]/40 flex items-center gap-2.5">
         <span
           className={`h-2.5 w-2.5 rounded-full ${
-            isApiConnected ? 'bg-emerald-700 animate-pulse' : 'bg-rose-700'
+            isApiConnected?.status === 'offline' ? 'bg-rose-700' : 'bg-emerald-700 animate-pulse'
           }`}
         />
         <div className="text-[11px]">
           <p className="font-bold text-[#1c1c1c]">
-            {isApiConnected ? 'System Online' : 'System Offline'}
+            {isApiConnected?.status === 'offline' ? 'System Offline' : 'System Online'}
           </p>
-          <p className="text-[#4a3600] text-[10px]">v2.0.0 (FastAPI)</p>
+          <p className="text-[#4a3600] text-[10px]">
+            {isApiConnected?.isBackend ? 'v2.0.0 (FastAPI)' : 'v2.0.0 (Demo Mode)'}
+          </p>
         </div>
       </div>
     </div>
+
   );
 }

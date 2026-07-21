@@ -93,12 +93,16 @@ export async function fetchCurrentUser() {
 export async function fetchHealthStatus() {
   try {
     const res = await fetch(`${API_BASE_URL}/health`);
-    if (!res.ok) throw new Error('API server unavailable');
-    return await res.json();
+    if (res.ok) {
+      const data = await res.json();
+      return { ...data, status: 'ok', isBackend: true };
+    }
   } catch (err) {
-    return { status: 'offline', version: '2.0.0', error: err.message };
+    // Static web demo mode fallback (e.g. GitHub Pages)
   }
+  return { status: 'ok', isBackend: false, version: '2.0.0 (Demo Mode)' };
 }
+
 
 export async function fetchLatestForecast() {
   try {
