@@ -9,7 +9,7 @@ export default function TopFeaturesCard({ data }) {
       let color = '#6c5ce7'; // default ENGINEERED
       if (item.type === 'WEATHER') color = '#f9b233';
       else if (item.type === 'CALENDAR') color = '#e62b76';
-      
+
       return {
         ...item,
         color,
@@ -69,7 +69,7 @@ export default function TopFeaturesCard({ data }) {
                 contentStyle={{
                   backgroundColor: '#242424',
                   borderColor: '#555555',
-                  borderRadius: '8px',
+                  borderRadius: '4px',
                   color: '#fff',
                   fontSize: '12px',
                 }}
