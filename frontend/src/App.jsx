@@ -10,7 +10,7 @@ import LoginModal from './components/LoginModal';
 import LoginScreen from './components/LoginScreen';
 
 
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import {
   fetchHealthStatus,
   fetchLatestForecast,
@@ -19,7 +19,8 @@ import {
 } from './services/api';
 
 function MainApp() {
-  const [activeScreen, setActiveScreen] = useState('login');
+  const { isLoggedIn, loading } = useAuth();
+  const [activeScreen, setActiveScreen] = useState('24h');
   const [isApiConnected, setIsApiConnected] = useState(false);
   const [forecastData, setForecastData] = useState(null);
   const [evalData24h, setEvalData24h] = useState(null);
@@ -27,8 +28,10 @@ function MainApp() {
   const [isRetraining, setIsRetraining] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
-  // Load health, real-time forecast, and evaluation data with 5s polling interval
+  // Load health, real-time forecast, and evaluation data with 5s polling interval (only when logged in)
   useEffect(() => {
+    if (!isLoggedIn) return;
+
     async function loadData() {
       const health = await fetchHealthStatus();
       setIsApiConnected(health);
@@ -48,7 +51,7 @@ function MainApp() {
     loadData();
     const interval = setInterval(loadData, 5000);
     return () => clearInterval(interval);
-  }, [activeScreen]);
+  }, [activeScreen, isLoggedIn]);
 
 
   const handleRetrain = async () => {
@@ -112,6 +115,38 @@ function MainApp() {
     }));
   };
 
+  // Loading state while resolving token/auth
+  if (loading) {
+    return (
+      <div className="flex h-screen bg-[#1c1c1c] text-white items-center justify-center font-sans">
+        <div className="flex items-center gap-3 text-gray-400">
+          <div className="w-5 h-5 border-2 border-[#fcb712] border-t-transparent rounded-full animate-spin"></div>
+          <span className="text-sm font-medium">Loading StaffOpt...</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Standalone Full-Screen Login Gate
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-[#1c1c1c] text-white font-sans flex flex-col justify-center items-center p-6 overflow-y-auto">
+        <div className="w-full max-w-5xl space-y-6 my-auto">
+          <div className="text-center space-y-1">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-[#f9b233] font-serif tracking-tight">
+              explorium
+            </h1>
+            <p className="text-xs font-extrabold tracking-[0.3em] text-gray-400 uppercase">
+              Staffing Optimizer V2
+            </p>
+          </div>
+          <LoginScreen />
+        </div>
+      </div>
+    );
+  }
+
+  // Authenticated Main Application Layout
   return (
     <div className="flex h-screen bg-[#333333] text-white font-sans overflow-hidden">
       {/* Login Modal */}

@@ -73,7 +73,7 @@ export default function Sidebar({ activeScreen, setActiveScreen, isApiConnected 
             </div>
           </div>
 
-          {/* Sign In / Account */}
+          {/* Account & Roles */}
           <button
             onClick={() => setActiveScreen('login')}
             className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all text-left cursor-pointer ${
@@ -83,7 +83,7 @@ export default function Sidebar({ activeScreen, setActiveScreen, isApiConnected 
             }`}
           >
             <ShieldCheck className="h-4 w-4 shrink-0" />
-            <span>Sign In / Account</span>
+            <span>Account & Roles</span>
           </button>
         </nav>
       </div>
