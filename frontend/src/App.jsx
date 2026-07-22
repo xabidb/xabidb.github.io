@@ -209,7 +209,7 @@ function MainApp() {
 
           {/* Screen 1: 72h Model Performance */}
           {activeScreen === '72h' && (
-            <div className="p-6 space-y-6 w-full">
+            <div className="px-16 pt-6 pb-20 space-y-6 w-full">
               {/* KPI Cards Row */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <MetricCard

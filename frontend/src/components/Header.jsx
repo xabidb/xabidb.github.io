@@ -23,7 +23,7 @@ export default function Header({ activeScreen, bestModel, onRetrain, isRetrainin
   const isAdmin = hasRole('admin');
 
   return (
-    <header className="flex flex-col md:flex-row justify-between items-start md:items-center px-16 pt-20 pb-6 border-b border-[#3b3b3b] bg-[#333333] gap-4">
+    <header className="flex flex-col md:flex-row justify-between items-start md:items-center px-16 pt-20 pb-6 border-b border-[#3b3b3b] bg-[#333333] gap-4 font-roboto">
       <div className="flex items-center gap-3">
         <h2 className="text-xl md:text-4xl font-semibold text-white tracking-tight">{getTitle()}</h2>
       </div>
