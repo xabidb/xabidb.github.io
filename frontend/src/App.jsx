@@ -19,7 +19,7 @@ import {
 } from './services/api';
 
 function MainApp() {
-  const [activeScreen, setActiveScreen] = useState('24h');
+  const [activeScreen, setActiveScreen] = useState('login');
   const [isApiConnected, setIsApiConnected] = useState(false);
   const [forecastData, setForecastData] = useState(null);
   const [evalData24h, setEvalData24h] = useState(null);
