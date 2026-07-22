@@ -23,7 +23,7 @@ export default function MetricCard({ title, value, unit = '', maxVal = 100, colo
   return (
     <div className="bg-[#363636] p-6 rounded-xl border border-[#454545] shadow-lg flex flex-col justify-between h-40">
       <div className="flex justify-between items-start">
-        <h3 className="text-sm font-medium text-gray-300 max-w-[160px] leading-snug">{title}</h3>
+        <h3 className="text-lg font-medium text-gray-300 max-w-[160px] leading-snug">{title}</h3>
         <span className="text-4xl font-bold text-white tracking-tight">
           {value}
           {unit}
