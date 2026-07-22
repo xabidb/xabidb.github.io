@@ -7,7 +7,7 @@ export default function Sidebar({ activeScreen, setActiveScreen, isApiConnected 
   const isModelPerfActive = activeScreen === '24h' || activeScreen === '72h';
 
   return (
-    <div className="w-64 bg-[#f9b233] text-[#333333] h-screen flex flex-col justify-between shrink-0 font-roboto shadow-2xl">
+    <div className="w-64 bg-[#f9b233] text-[#333333] h-screen flex flex-col justify-between shrink-0 font-roboto shadow-2xl overflow-y-auto">
       <div>
         {/* Brand Header matching Figma Demo 4 */}
         <div className="p-6 border-b border-[#e5a024]/40 flex items-center">

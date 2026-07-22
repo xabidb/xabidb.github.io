@@ -44,14 +44,14 @@ export default function PredictedVsActualChart({ data }) {
   }, [data, defaultRealModelData]);
 
   return (
-    <div className="bg-[#363636] p-6 rounded-xl border border-[#454545] shadow-lg">
+    <div className="bg-[#363636] p-4 2xl:p-6 rounded-xl border border-[#454545] shadow-lg">
       {/* Header & Legend matching Figma Demo 4 */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 2xl:mb-6 gap-2">
         <div>
-          <h3 className="text-2xl md:text-2xl font-semibold font-roboto text-white leading-snug">
+          <h3 className="text-lg lg:text-xl 2xl:text-2xl font-semibold font-roboto text-white leading-snug">
             Predicted vs Actual Walk-Ins
           </h3>
-          <p className="text-sm text-white/40 font-roboto font-light mt-1">
+          <p className="text-xs lg:text-sm text-white/40 font-roboto font-light mt-1">
             Currently displaying the best model's test split predictions vs actual walk-ins
           </p>
         </div>
@@ -59,17 +59,17 @@ export default function PredictedVsActualChart({ data }) {
         <div className="flex items-center gap-5 text-[11px] font-bold tracking-wider">
           <div className="flex items-center gap-2">
             <span className="h-3 w-3 rounded-full bg-[#edc24a]" />
-            <span className="text-lg font-light font-roboto text-white/40">ACTUAL WALK-INS</span>
+            <span className="text-xs sm:text-sm lg:text-base 2xl:text-lg font-light font-roboto text-white/40">ACTUAL WALK-INS</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="h-3 w-3 rounded-full bg-[#e62b76]" />
-            <span className="text-lg font-light font-roboto text-white/40">PREDICTED WALK-INS</span>
+            <span className="text-xs sm:text-sm lg:text-base 2xl:text-lg font-light font-roboto text-white/40">PREDICTED WALK-INS</span>
           </div>
         </div>
       </div>
 
       {/* 98-Day Holdout Test Split Composed Chart */}
-      <div className="h-72 w-full">
+      <div className="h-56 lg:h-64 2xl:h-72 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 20 }}>
             <defs>

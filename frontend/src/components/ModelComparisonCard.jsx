@@ -25,9 +25,9 @@ export default function ModelComparisonCard({ horizon = '24h', metricsData }) {
   const data = metricsData || (horizon === '24h' ? defaultData24h : defaultData72h);
 
   return (
-    <div className="bg-[#363636] p-6 rounded-xl border border-[#454545] shadow-lg">
+    <div className="bg-[#363636] p-4 2xl:p-6 rounded-xl border border-[#454545] shadow-lg flex flex-col justify-between">
       {/* Header & Legend matching Figma Demo 4 */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-4 2xl:mb-6">
         <h3 className="text-2xl md:text-2xl font-semibold font-roboto text-gray-100 leading-snug">Model Comparison</h3>
         <div className="flex items-center gap-4 text-[11px] font-bold">
           <div className="flex items-center gap-1.5">
@@ -46,7 +46,7 @@ export default function ModelComparisonCard({ horizon = '24h', metricsData }) {
       </div>
 
       {/* Bar Chart */}
-      <div className="h-60 w-full">
+      <div className="h-44 lg:h-52 2xl:h-60 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 10, right: 10, left: -25, bottom: 20 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#454545" vertical={true} horizontal={false} />

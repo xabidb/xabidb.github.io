@@ -21,10 +21,10 @@ export default function MetricCard({ title, value, unit = '', maxVal = 100, colo
   const percentage = Math.min(100, Math.max(0, (numVal / maxVal) * 100));
 
   return (
-    <div className="bg-[#363636] p-6 rounded-xl border border-[#454545] shadow-lg flex flex-col justify-between min-h-40">
+    <div className="bg-[#363636] p-4 2xl:p-6 rounded-xl border border-[#454545] shadow-lg flex flex-col justify-between min-h-32 2xl:min-h-40">
       <div className="flex justify-between items-start gap-4">
-        <h3 className="text-2xl md:text-2xl font-semibold font-roboto text-gray-100 leading-snug">{title}</h3>
-        <span className="text-5xl font-bold font-roboto text-white tracking-tight shrink-0">
+        <h3 className="text-base lg:text-lg 2xl:text-2xl font-semibold font-roboto text-gray-100 leading-snug">{title}</h3>
+        <span className="text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl font-bold font-roboto text-white tracking-tight shrink-0">
           {value}
           {unit}
         </span>

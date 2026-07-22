@@ -59,9 +59,9 @@ export default function TopFeaturesCard({ data }) {
   }, [featureData]);
 
   return (
-    <div className="bg-[#363636] p-6 rounded-xl border border-[#454545] shadow-lg flex flex-col justify-between">
+    <div className="bg-[#363636] p-4 2xl:p-6 rounded-xl border border-[#454545] shadow-lg flex flex-col justify-between">
       {/* Header & Legend matching Figma Demo 4 */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mb-4 2xl:mb-6">
         <h3 className="text-2xl md:text-2xl font-semibold font-roboto text-gray-100 leading-snug">Top Features</h3>
         <div className="flex items-center gap-3 text-[11px] font-bold tracking-wider">
           <div className="flex items-center gap-1.5">
@@ -82,7 +82,7 @@ export default function TopFeaturesCard({ data }) {
       {/* Content Layout: Donut + List */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
         {/* Donut Chart */}
-        <div className="md:col-span-4 h-52 flex justify-center items-center">
+        <div className="md:col-span-4 h-40 lg:h-44 2xl:h-52 flex justify-center items-center">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
