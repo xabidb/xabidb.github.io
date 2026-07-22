@@ -77,14 +77,14 @@ export default function Sidebar({ activeScreen, setActiveScreen, isApiConnected 
         {/* User Auth Profile Card */}
         {isLoggedIn && user && (
           <div className="px-4 pt-3 pb-1 border-t border-[#e5a024]/40">
-            <div className="flex items-center justify-between bg-[#f9b233] text-[#1c1c1c] p-3 rounded-xl shadow-md border border-[#e5a024]">
+            <div className="flex items-center justify-between bg-[#f9b233] text-white p-3 rounded-xl shadow-md">
               <div className="flex items-center gap-2.5 overflow-hidden">
-                <div className="p-1.5 bg-[#1c1c1c] rounded-full shrink-0">
-                  <User className="h-4 w-4 text-[#f9b233]" />
+                <div className="p-1.5 bg-[#2b2b2b] rounded-full border border-[#444] shrink-0">
+                  <User className="h-4 w-4 text-[#]" />
                 </div>
                 <div className="min-w-0 text-left">
-                  <p className="text-xs font-extrabold truncate text-[#1c1c1c]">{user.full_name}</p>
-                  <span className="text-[10px] text-[#4a3600] font-bold block uppercase tracking-wider">
+                  <p className="text-xs font-bold truncate text-white">{user.full_name}</p>
+                  <span className="text-[10px] text-gray-400 font-medium block uppercase tracking-wider">
                     {user.role}
                   </span>
                 </div>
@@ -92,7 +92,7 @@ export default function Sidebar({ activeScreen, setActiveScreen, isApiConnected 
               <button
                 onClick={logout}
                 title="Sign Out Account"
-                className="text-[#1c1c1c] hover:text-rose-700 p-1.5 rounded-lg hover:bg-[#1c1c1c]/10 transition-colors shrink-0 cursor-pointer ml-1"
+                className="text-gray-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-white/10 transition-colors shrink-0 cursor-pointer ml-1"
               >
                 <LogOut className="h-4 w-4" />
               </button>
