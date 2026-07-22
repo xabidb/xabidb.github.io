@@ -52,7 +52,7 @@ export default function PredictedVsActualChart({ data }) {
             Predicted vs Actual Walk-Ins
           </h3>
           <p className="text-sm text-white/40 font-roboto font-light mt-1">
-            Displaying the best model's test split predictions vs actual walk-ins
+            Currently displaying the best model's test split predictions vs actual walk-ins
           </p>
         </div>
 
@@ -71,7 +71,7 @@ export default function PredictedVsActualChart({ data }) {
       {/* 98-Day Holdout Test Split Composed Chart */}
       <div className="h-72 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+          <ComposedChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 20 }}>
             <defs>
               <linearGradient id="actualGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#edc24a" stopOpacity={0.2} />
@@ -86,9 +86,11 @@ export default function PredictedVsActualChart({ data }) {
               tickLine={false}
               axisLine={false}
               interval={14}
+              dy={15}
             />
             <YAxis stroke="#999999" fontSize={12} tickLine={false} axisLine={false} domain={['auto', 'auto']} />
             <Tooltip
+              cursor={false}
               contentStyle={{
                 backgroundColor: '#242424',
                 borderColor: '#555555',

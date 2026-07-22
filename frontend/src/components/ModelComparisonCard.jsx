@@ -31,16 +31,16 @@ export default function ModelComparisonCard({ horizon = '24h', metricsData }) {
         <h3 className="text-2xl md:text-2xl font-semibold font-roboto text-gray-100 leading-snug">Model Comparison</h3>
         <div className="flex items-center gap-4 text-[11px] font-bold">
           <div className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#6c5ce7]" />
-            <span className="text-gray-300">MAE</span>
+            <span className="h-3 w-3 rounded-full bg-[#6c5ce7]" />
+            <span className="text-lg font-light font-roboto text-white/40">MAE</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#f9b233]" />
-            <span className="text-gray-300">RMSE</span>
+            <span className="h-3 w-3 rounded-full bg-[#f9b233]" />
+            <span className="text-lg font-light font-roboto text-white/40">RMSE</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#e62b76]" />
-            <span className="text-gray-300">R²</span>
+            <span className="h-3 w-3 rounded-full bg-[#e62b76]" />
+            <span className="text-lg font-light font-roboto text-white/40">R²</span>
           </div>
         </div>
       </div>
@@ -48,11 +48,12 @@ export default function ModelComparisonCard({ horizon = '24h', metricsData }) {
       {/* Bar Chart */}
       <div className="h-60 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
+          <BarChart data={data} margin={{ top: 10, right: 10, left: -25, bottom: 20 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#454545" vertical={true} horizontal={false} />
-            <XAxis dataKey="name" stroke="#999999" fontSize={11} tickLine={false} axisLine={false} />
-            <YAxis stroke="#999999" fontSize={11} tickLine={false} axisLine={false} domain={[0, 100]} ticks={[0, 25, 50, 100]} />
+            <XAxis dataKey="name" stroke="#999999" fontSize={12} tickLine={false} axisLine={false} dy={10} />
+            <YAxis stroke="#999999" fontSize={12} tickLine={false} axisLine={false} domain={[0, 100]} ticks={[0, 25, 50, 75, 100]} />
             <Tooltip
+              cursor={false}
               contentStyle={{
                 backgroundColor: '#242424',
                 borderColor: '#555555',

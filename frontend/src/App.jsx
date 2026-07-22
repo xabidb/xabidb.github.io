@@ -131,15 +131,7 @@ function MainApp() {
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen bg-[#1c1c1c] text-white font-sans flex flex-col justify-center items-center p-6 overflow-y-auto">
-        <div className="w-full max-w-5xl space-y-6 my-auto">
-          <div className="text-center space-y-1">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-[#f9b233] font-serif tracking-tight">
-              explorium
-            </h1>
-            <p className="text-xs font-extrabold tracking-[0.3em] text-gray-400 uppercase">
-              Staffing Optimizer V2
-            </p>
-          </div>
+        <div className="w-full max-w-5xl my-auto">
           <LoginScreen />
         </div>
       </div>

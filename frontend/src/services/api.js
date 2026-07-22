@@ -67,7 +67,7 @@ export async function loginUser(email, password) {
     return { access_token: demoToken, token_type: 'bearer', user: userPayload };
   }
 
-  throw new Error('Incorrect email or password. Demo accounts: admin@explorium.io, manager@explorium.io, or viewer@explorium.io.');
+  throw new Error('Incorrect email or password.');
 }
 
 export async function fetchCurrentUser() {
@@ -143,18 +143,64 @@ export async function fetchLatestForecast() {
   };
 }
 
+export function formatFeatureName(rawName) {
+  if (!rawName) return rawName;
+  const nameMap = {
+    '1day Lag Walk-Ins': 'Previous Day Walk-Ins',
+    '24h Science Booking Velocity': 'Advance Science Center Bookings',
+    'Science Booking Velocity 24h': 'Advance Science Center Bookings',
+    'X Science Known 24h': 'Pre-Booked Science Tickets (24h)',
+    'X Science Known 72h': 'Pre-Booked Science Tickets (72h)',
+    'Daily Max Temperature': 'Daily Peak Temperature',
+    'Daily Total Rain': 'Daily Rainfall Amount',
+    'Daily Total Rain mm': 'Daily Rainfall Amount',
+    'Both Holiday': 'Public & School Holiday',
+    'Lag 14d': 'Walk-Ins 2 Weeks Ago',
+    'Lag 28d': 'Walk-Ins 4 Weeks Ago',
+    'Lag 3d': 'Walk-Ins 3 Days Ago',
+    'Lag 1d': 'Previous Day Walk-Ins',
+    'std 60d': '60-Day Visitor Fluctuation',
+    'mean 2d': 'Recent 2-Day Average Visitors',
+  };
+
+  if (nameMap[rawName]) return nameMap[rawName];
+
+  return rawName
+    .replace(/^Lag\s*(\d+)d$/i, 'Walk-Ins $1 Days Ago')
+    .replace(/^std\s*(\d+)d$/i, '$1-Day Visitor Fluctuation')
+    .replace(/^mean\s*(\d+)d$/i, 'Recent $1-Day Average Visitors')
+    .replace(/Velocity/i, 'Booking Speed')
+    .replace(/Known/i, 'Pre-Booked Tickets');
+}
+
 export async function fetchEvaluationData(horizon = '24h') {
   try {
-    const res = await fetch(`${API_BASE_URL}/forecast/evaluation?horizon=${horizon}`, {
+    const res = await fetch(`${API_BASE_URL}/forecast/evaluate?horizon=${horizon}`, {
       headers: getAuthHeaders(),
     });
-    if (res.ok) return await res.json();
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.feature_importances) {
+        data.feature_importances = data.feature_importances.map(f => ({
+          ...f,
+          name: formatFeatureName(f.name)
+        }));
+      }
+      return data;
+    }
   } catch (err) {
     // Return real trained ML model evaluation dataset below
   }
 
   if (realModelEvalData && realModelEvalData[horizon]) {
-    return realModelEvalData[horizon];
+    const data = realModelEvalData[horizon];
+    return {
+      ...data,
+      feature_importances: (data.feature_importances || []).map(f => ({
+        ...f,
+        name: formatFeatureName(f.name)
+      }))
+    };
   }
 
   // Generate 98-day holdout test split ending June 28, 2026 (March 22 - June 28, 2026)
@@ -200,11 +246,11 @@ export async function fetchEvaluationData(horizon = '24h') {
     },
     test_eval_points,
     feature_importances: [
-      { name: '1day Lag Walk-Ins', value: 23.1, type: 'ENGINEERED' },
-      { name: '24h Science Booking Velocity', value: 18.2, type: 'ENGINEERED' },
-      { name: 'Daily Max Temperature', value: 13.9, type: 'WEATHER' },
-      { name: 'Both Holiday', value: 11.2, type: 'CALENDAR' },
-      { name: 'Daily Total Rain', value: 7.4, type: 'WEATHER' },
+      { name: 'Previous Day Walk-Ins', value: 23.1, type: 'ENGINEERED' },
+      { name: 'Advance Science Center Bookings', value: 18.2, type: 'ENGINEERED' },
+      { name: 'Daily Peak Temperature', value: 13.9, type: 'WEATHER' },
+      { name: 'Public & School Holiday', value: 11.2, type: 'CALENDAR' },
+      { name: 'Daily Rainfall Amount', value: 7.4, type: 'WEATHER' },
     ],
   };
 }

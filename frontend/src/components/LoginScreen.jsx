@@ -121,130 +121,29 @@ export default function LoginScreen({ onLoginSuccess }) {
         </div>
       ) : (
         /* Sign In Screen View */
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column: Role Capabilities */}
-          <div className="lg:col-span-6 space-y-6">
-            <div className="bg-[#3b3b3b] p-6 rounded-xl border border-[#444444] shadow-md">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2.5 bg-[#fcb712]/10 rounded-lg border border-[#fcb712]/20">
-                  <ShieldCheck className="h-6 w-6 text-[#fcb712]" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white">StaffOpt Access Control</h3>
-                  <p className="text-xs text-gray-400">Multi-tier RBAC for Forecasting & Planning</p>
-                </div>
-              </div>
-              <p className="text-xs text-gray-300 leading-relaxed">
-                StaffOpt V2 implements strict Role-Based Access Control to govern forecasting engines, sensitive pipeline retraining routines, and facility staffing configurations.
-              </p>
-            </div>
-
-            {/* Role Tiers Breakdown */}
+        <div className="max-w-3xl mx-auto w-full bg-[#3b3b3b] rounded-2xl border border-[#444444] shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
+          {/* Left Half: Yellow Brand Accent */}
+          <div className="bg-[#f9b233] text-[#333333] p-8 flex flex-col justify-between space-y-6">
             <div className="space-y-4">
-              {/* Admin Tier */}
-              <div className="bg-[#3b3b3b] p-5 rounded-xl border border-[#444444] hover:border-[#fcb712]/50 transition-all shadow">
-                <div className="flex justify-between items-center mb-2">
-                  <div className="flex items-center gap-2">
-                    <span className="bg-[#fcb712]/10 text-[#fcb712] border border-[#fcb712]/30 px-2.5 py-0.5 rounded text-xs font-extrabold uppercase">
-                      Admin
-                    </span>
-                    <span className="text-xs text-gray-400 font-medium">Full Privileges</span>
-                  </div>
-                  <CheckCircle2 className="h-4 w-4 text-[#fcb712]" />
-                </div>
-                <ul className="text-xs text-gray-300 space-y-1 mt-2 list-disc list-inside">
-                  <li>Trigger ML model pipeline retraining</li>
-                  <li>Ingest and overwrite historical footfall datasets</li>
-                  <li>Full access to 24h & 72h evaluation metrics</li>
-                </ul>
+              <img src="/Logo.svg" alt="Explorium Staffing Optimizer" className="h-10 w-auto object-contain" />
+              <div>
+                <p className="text-xs font-semibold text-[#333333]/80 mt-1">
+                  AI-Powered Visitor Footfall & Workforce Forecasting
+                </p>
               </div>
-
-              {/* Manager Tier */}
-              <div className="bg-[#3b3b3b] p-5 rounded-xl border border-[#444444] hover:border-indigo-400/50 transition-all shadow">
-                <div className="flex justify-between items-center mb-2">
-                  <div className="flex items-center gap-2">
-                    <span className="bg-indigo-500/10 text-indigo-400 border border-indigo-400/30 px-2.5 py-0.5 rounded text-xs font-extrabold uppercase">
-                      Manager
-                    </span>
-                    <span className="text-xs text-gray-400 font-medium">Planning Control</span>
-                  </div>
-                  <CheckCircle2 className="h-4 w-4 text-indigo-400" />
-                </div>
-                <ul className="text-xs text-gray-300 space-y-1 mt-2 list-disc list-inside">
-                  <li>Configure staffing ratios & department filters</li>
-                  <li>Generate shift recommendations and roster blocks</li>
-                  <li>Ingest data records</li>
-                </ul>
-              </div>
-
-              {/* Viewer Tier */}
-              <div className="bg-[#3b3b3b] p-5 rounded-xl border border-[#444444] hover:border-emerald-400/50 transition-all shadow">
-                <div className="flex justify-between items-center mb-2">
-                  <div className="flex items-center gap-2">
-                    <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-400/30 px-2.5 py-0.5 rounded text-xs font-extrabold uppercase">
-                      Viewer
-                    </span>
-                    <span className="text-xs text-gray-400 font-medium">Read Only</span>
-                  </div>
-                  <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                </div>
-                <ul className="text-xs text-gray-300 space-y-1 mt-2 list-disc list-inside">
-                  <li>View 24h & 72h footfall evaluation charts</li>
-                  <li>Inspect predicted vs actual model accuracy curves</li>
-                </ul>
-              </div>
+            </div>
+            <div className="text-xs text-[#333333]/70 font-medium">
+              <p>© Explorium Staffing Optimizer V1</p>
             </div>
           </div>
 
-          {/* Right Column: Sign In Form */}
-          <div className="lg:col-span-6 bg-[#3b3b3b] p-8 rounded-xl border border-[#444444] shadow-xl space-y-6">
+          {/* Right Half: Sign In Form */}
+          <div className="p-8 space-y-6 bg-[#3b3b3b]">
             <div>
               <h3 className="text-xl font-bold text-white">Sign In to StaffOpt</h3>
               <p className="text-xs text-gray-400 mt-1">
-                Enter your credentials or choose a quick demo profile below.
+                Enter your credentials below to access the staffing optimization system.
               </p>
-            </div>
-
-            {/* Quick Demo Pre-fill Cards */}
-            <div>
-              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
-                <Sparkles className="h-3.5 w-3.5 text-[#fcb712]" /> Pre-fill Demo Profile Credentials
-              </label>
-              <div className="grid grid-cols-3 gap-2">
-                <button
-                  type="button"
-                  onClick={() => handleFillDemo('admin@explorium.io', 'adminpassword')}
-                  className="p-3 bg-[#2b2b2b] hover:bg-[#fcb712]/20 border border-[#444444] hover:border-[#fcb712] rounded-lg transition-all text-left flex flex-col justify-between group cursor-pointer"
-                >
-                  <span className="text-xs font-bold text-[#fcb712] group-hover:text-white">Admin</span>
-                  <span className="text-[10px] text-gray-400 mt-1">Full Access</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => handleFillDemo('manager@explorium.io', 'managerpassword')}
-                  className="p-3 bg-[#2b2b2b] hover:bg-indigo-500/20 border border-[#444444] hover:border-indigo-400 rounded-lg transition-all text-left flex flex-col justify-between group cursor-pointer"
-                >
-                  <span className="text-xs font-bold text-indigo-400 group-hover:text-white">Manager</span>
-                  <span className="text-[10px] text-gray-400 mt-1">Schedules</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => handleFillDemo('viewer@explorium.io', 'viewerpassword')}
-                  className="p-3 bg-[#2b2b2b] hover:bg-emerald-500/20 border border-[#444444] hover:border-emerald-400 rounded-lg transition-all text-left flex flex-col justify-between group cursor-pointer"
-                >
-                  <span className="text-xs font-bold text-emerald-400 group-hover:text-white">Viewer</span>
-                  <span className="text-[10px] text-gray-400 mt-1">Read Only</span>
-                </button>
-              </div>
-            </div>
-
-            <div className="relative flex items-center justify-center">
-              <div className="border-t border-[#444444] w-full"></div>
-              <span className="bg-[#3b3b3b] px-3 text-[11px] font-semibold text-gray-500 uppercase absolute">
-                Credentials Form
-              </span>
             </div>
 
             {error && (
