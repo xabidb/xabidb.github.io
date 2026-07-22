@@ -28,7 +28,7 @@ export default function ModelComparisonCard({ horizon = '24h', metricsData }) {
     <div className="bg-[#363636] p-6 rounded-xl border border-[#454545] shadow-lg">
       {/* Header & Legend matching Figma Demo 4 */}
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-base font-bold text-white">Model Comparison</h3>
+        <h3 className="text-2xl md:text-2xl font-semibold font-roboto text-gray-100 leading-snug">Model Comparison</h3>
         <div className="flex items-center gap-4 text-[11px] font-bold">
           <div className="flex items-center gap-1.5">
             <span className="h-2.5 w-2.5 rounded-full bg-[#6c5ce7]" />

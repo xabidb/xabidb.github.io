@@ -148,7 +148,7 @@ function MainApp() {
 
   // Authenticated Main Application Layout
   return (
-    <div className="flex h-screen bg-[#333333] text-white font-sans overflow-hidden">
+    <div className="flex h-screen bg-[#333333] text-white font-roboto overflow-hidden">
       {/* Login Modal */}
       <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
 
@@ -172,7 +172,7 @@ function MainApp() {
         <main className="flex-1">
           {/* Screen 1: 24h Model Performance */}
           {activeScreen === '24h' && (
-            <div className="p-6 space-y-6 max-w-[1440px]">
+            <div className="px-16 pt-6 pb-20 space-y-6 w-full">
               {/* KPI Cards Row */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <MetricCard
@@ -209,7 +209,7 @@ function MainApp() {
 
           {/* Screen 1: 72h Model Performance */}
           {activeScreen === '72h' && (
-            <div className="p-6 space-y-6 max-w-[1440px]">
+            <div className="p-6 space-y-6 w-full">
               {/* KPI Cards Row */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <MetricCard

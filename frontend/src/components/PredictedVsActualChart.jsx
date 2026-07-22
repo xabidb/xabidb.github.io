@@ -1,75 +1,93 @@
 import React from 'react';
 import {
   ResponsiveContainer,
-  LineChart,
+  ComposedChart,
   Line,
+  Area,
   XAxis,
   YAxis,
   Tooltip,
   CartesianGrid,
 } from 'recharts';
+import realModelEvalData from '../data/real_model_evaluation.json';
 
 export default function PredictedVsActualChart({ data }) {
-  // Format dates for display
-  const formattedData = React.useMemo(() => {
-    if (!data || data.length === 0) return null;
-    return data.map((item) => {
-      let formattedDate = item.date;
+  // Real trained ML model evaluation dataset (Holdout Test Split from backend training)
+  const defaultRealModelData = React.useMemo(() => {
+    return realModelEvalData?.['24h']?.test_eval_points || [];
+  }, []);
+
+  // Format dataset for 98-day test split chart
+  const chartData = React.useMemo(() => {
+    const rawData = (data && data.length > 0) ? data : defaultRealModelData;
+    return rawData.map((item) => {
+      let displayDate = item.displayDate || item.date;
+      let monthName = item.month || item.date;
+
       if (item.date && item.date.includes('-')) {
         const parts = item.date.split('-');
         if (parts.length === 3) {
           const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-          formattedDate = d.toLocaleDateString('en-US', { month: 'short' });
+          displayDate = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+          monthName = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
         }
       }
+
       return {
         ...item,
-        date: formattedDate,
+        dateLabel: displayDate,
+        monthName: monthName,
         actual: Math.round(item.actual),
         predicted: Math.round(item.predicted),
       };
     });
-  }, [data]);
-
-  const chartData = formattedData || [
-    { date: 'Sep', actual: 25, predicted: 15 },
-    { date: 'Oct', actual: 48, predicted: 22 },
-    { date: 'Nov', actual: 18, predicted: 28 },
-    { date: 'Dec', actual: 32, predicted: 12 },
-    { date: 'Jan', actual: 55, predicted: 25 },
-    { date: 'Feb', actual: 10, predicted: 32 },
-    { date: 'Mar', actual: 42, predicted: 12 },
-    { date: 'Apr', actual: 28, predicted: 32 },
-    { date: 'May', actual: 20, predicted: 60 },
-    { date: 'Jun', actual: 28, predicted: 25 },
-    { date: 'Jul', actual: 12, predicted: 30 },
-    { date: 'Aug', actual: 50, predicted: 55 },
-  ];
+  }, [data, defaultRealModelData]);
 
   return (
     <div className="bg-[#363636] p-6 rounded-xl border border-[#454545] shadow-lg">
       {/* Header & Legend matching Figma Demo 4 */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
-        <h3 className="text-base font-bold text-white">Predicted vs Actual</h3>
+        <div>
+          <h3 className="text-2xl md:text-2xl font-semibold font-roboto text-white leading-snug">
+            Predicted vs Actual Walk-Ins
+          </h3>
+          <p className="text-sm text-white/40 font-roboto font-light mt-1">
+            Displaying the best model's test split predictions vs actual walk-ins
+          </p>
+        </div>
+
         <div className="flex items-center gap-5 text-[11px] font-bold tracking-wider">
           <div className="flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#f9b233]" />
-            <span className="text-gray-300">ACTUAL WALK-INS</span>
+            <span className="h-3 w-3 rounded-full bg-[#edc24a]" />
+            <span className="text-lg font-light font-roboto text-white/40">ACTUAL WALK-INS</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#e62b76]" />
-            <span className="text-gray-300">PREDICTED WALK-INS</span>
+            <span className="h-3 w-3 rounded-full bg-[#e62b76]" />
+            <span className="text-lg font-light font-roboto text-white/40">PREDICTED WALK-INS</span>
           </div>
         </div>
       </div>
 
-      {/* Line Chart */}
+      {/* 98-Day Holdout Test Split Composed Chart */}
       <div className="h-72 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
+          <ComposedChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+            <defs>
+              <linearGradient id="actualGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#edc24a" stopOpacity={0.2} />
+                <stop offset="85%" stopColor="#edc24a" stopOpacity={0.0} />
+              </linearGradient>
+            </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#454545" vertical={true} horizontal={false} />
-            <XAxis dataKey="date" stroke="#999999" fontSize={11} tickLine={false} axisLine={false} />
-            <YAxis stroke="#999999" fontSize={11} tickLine={false} axisLine={false} domain={[0, 100]} ticks={[0, 25, 50, 100]} />
+            <XAxis
+              dataKey="monthName"
+              stroke="#999999"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+              interval={14}
+            />
+            <YAxis stroke="#999999" fontSize={12} tickLine={false} axisLine={false} domain={['auto', 'auto']} />
             <Tooltip
               contentStyle={{
                 backgroundColor: '#242424',
@@ -78,24 +96,35 @@ export default function PredictedVsActualChart({ data }) {
                 color: '#fff',
                 fontSize: '12px',
               }}
+              formatter={(value, name) => [
+                `${value} visitors`,
+                name === 'actual' ? 'Actual Walk-Ins' : 'Predicted Walk-Ins',
+              ]}
+              labelFormatter={(label, payload) => {
+                if (payload && payload.length > 0 && payload[0].payload) {
+                  return `Date: ${payload[0].payload.dateLabel}`;
+                }
+                return `Date: ${label}`;
+              }}
             />
-            <Line
+            <Area
               type="monotone"
               dataKey="actual"
-              stroke="#f9b233"
-              strokeWidth={3}
+              stroke="#edc24a"
+              strokeWidth={2.5}
+              fill="url(#actualGradient)"
               dot={false}
-              activeDot={{ r: 6, fill: '#f9b233' }}
+              activeDot={{ r: 5, fill: '#edc24a' }}
             />
             <Line
               type="monotone"
               dataKey="predicted"
               stroke="#e62b76"
-              strokeWidth={3}
+              strokeWidth={2.5}
               dot={false}
-              activeDot={{ r: 6, fill: '#e62b76' }}
+              activeDot={{ r: 5, fill: '#e62b76' }}
             />
-          </LineChart>
+          </ComposedChart>
         </ResponsiveContainer>
       </div>
     </div>

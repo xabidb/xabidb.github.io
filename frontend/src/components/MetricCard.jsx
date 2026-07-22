@@ -3,15 +3,15 @@ import React from 'react';
 export default function MetricCard({ title, value, unit = '', maxVal = 100, colorScheme = 'purple' }) {
   const schemeConfig = {
     purple: {
-      barBg: 'bg-[#6c5ce7]',
+      barBg: 'bg-gradient-to-r from-[#4A4DE6] to-[#7173E2]',
       ticks: ['0', '25', '50'],
     },
     gold: {
-      barBg: 'bg-[#f9b233]',
+      barBg: 'bg-gradient-to-r from-[#BC8F12] to-[#EDC24A]',
       ticks: ['0', '50', '100'],
     },
     pink: {
-      barBg: 'bg-[#e62b76]',
+      barBg: 'bg-gradient-to-r from-[#C20651] to-[#E62B76]',
       ticks: ['0', '50', '100'],
     },
   };
@@ -21,10 +21,10 @@ export default function MetricCard({ title, value, unit = '', maxVal = 100, colo
   const percentage = Math.min(100, Math.max(0, (numVal / maxVal) * 100));
 
   return (
-    <div className="bg-[#363636] p-6 rounded-xl border border-[#454545] shadow-lg flex flex-col justify-between h-40">
-      <div className="flex justify-between items-start">
-        <h3 className="text-lg font-medium text-gray-300 max-w-[160px] leading-snug">{title}</h3>
-        <span className="text-4xl font-bold text-white tracking-tight">
+    <div className="bg-[#363636] p-6 rounded-xl border border-[#454545] shadow-lg flex flex-col justify-between min-h-40">
+      <div className="flex justify-between items-start gap-4">
+        <h3 className="text-2xl md:text-2xl font-semibold font-roboto text-gray-100 leading-snug">{title}</h3>
+        <span className="text-5xl font-bold font-roboto text-white tracking-tight shrink-0">
           {value}
           {unit}
         </span>

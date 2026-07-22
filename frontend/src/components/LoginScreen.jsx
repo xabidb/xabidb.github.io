@@ -54,7 +54,7 @@ export default function LoginScreen({ onLoginSuccess }) {
   };
 
   return (
-    <div className="p-6 max-w-[1440px] space-y-6">
+    <div className="p-6 w-full space-y-6">
       {isLoggedIn ? (
         /* Logged In User Profile View */
         <div className="bg-[#3b3b3b] p-8 rounded-xl border border-[#444444] shadow-xl max-w-2xl mx-auto space-y-6">

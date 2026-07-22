@@ -29,7 +29,7 @@ export default function TopFeaturesCard({ data }) {
     <div className="bg-[#363636] p-6 rounded-xl border border-[#454545] shadow-lg flex flex-col justify-between">
       {/* Header & Legend matching Figma Demo 4 */}
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-base font-bold text-white">Top Features</h3>
+        <h3 className="text-2xl md:text-2xl font-semibold font-roboto text-gray-100 leading-snug">Top Features</h3>
         <div className="flex items-center gap-3 text-[11px] font-bold tracking-wider">
           <div className="flex items-center gap-1.5">
             <span className="h-2 w-2 rounded-full bg-[#6c5ce7]" />
