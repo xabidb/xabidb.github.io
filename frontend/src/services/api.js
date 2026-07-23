@@ -87,7 +87,7 @@ export async function fetchCurrentUser() {
   if (savedDemo) {
     try {
       return JSON.parse(savedDemo);
-    } catch (e) {}
+    } catch (e) { }
   }
   return null;
 }
@@ -147,11 +147,11 @@ export function formatFeatureName(rawName) {
   if (!rawName) return rawName;
   const nameMap = {
     '1day Lag Walk-Ins': 'Previous Day Walk-Ins',
-    '24h Science Booking Velocity': 'Advance Science Center Bookings',
-    'Science Booking Velocity 24h': 'Advance Science Center Bookings',
-    'X Science Known 24h': 'Pre-Booked Science Tickets (24h)',
-    'X Science Known 72h': 'Pre-Booked Science Tickets (72h)',
-    'Daily Max Temperature': 'Daily Peak Temperature',
+    '24h Science Booking Velocity': 'Science Booking Momentum',
+    'Science Booking Velocity 24h': 'Science Booking Momentum',
+    'X Science Known 24h': 'Science Tickets last 24h',
+    'X Science Known 72h': 'Science Tickets last 72h',
+    'Daily Max Temperature': 'Daily Max Temperature',
     'Daily Total Rain': 'Daily Rainfall Amount',
     'Daily Total Rain mm': 'Daily Rainfall Amount',
     'Both Holiday': 'Public & School Holiday',
@@ -160,7 +160,7 @@ export function formatFeatureName(rawName) {
     'Lag 3d': 'Walk-Ins 3 Days Ago',
     'Lag 1d': 'Previous Day Walk-Ins',
     'std 60d': '60-Day Visitor Fluctuation',
-    'mean 2d': 'Recent 2-Day Average Visitors',
+    'mean 2d': '2-Day Average Visitors',
   };
 
   if (nameMap[rawName]) return nameMap[rawName];
@@ -214,14 +214,14 @@ export async function fetchEvaluationData(horizon = '24h') {
     const dayOfWeek = d.getDay();
     const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
     const month = d.getMonth();
-    
+
     // Deterministic fixed seasonality and weekend factors
     const seasonal = Math.sin((month - 2) * Math.PI / 3) * 12;
     const weekendBoost = isWeekend ? 26 : 0;
     const noise = Math.sin(i * 0.45) * 8 + Math.cos(i * 0.85) * 4;
-    
+
     const actual = Math.max(12, Math.round(36 + seasonal + weekendBoost + noise));
-    
+
     // Deterministic fixed model residual error for 24h / 72h
     const residual = Math.sin(i * 0.3) * (horizon === '24h' ? 3.5 : 6.0) + Math.cos(i * 0.7) * 2.5;
     const predicted = Math.max(10, Math.round(actual + residual));

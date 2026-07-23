@@ -69,12 +69,12 @@ export default function ForecastStaffingScreen({ forecastData }) {
   }, [predictions, staffRatio]);
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="px-4 sm:px-6 lg:px-10 pt-4 sm:pt-6 pb-6 sm:pb-8 lg:pb-12 space-y-4 sm:space-y-6">
       {/* Parameters Controls */}
-      <div className="bg-[#3b3b3b] p-6 rounded-lg border border-[#444444] shadow-md grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+      <div className="bg-[#3b3b3b] p-4 sm:p-6 rounded-xl border border-[#444444] shadow-md grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 items-center">
         {/* Horizon Toggle */}
         <div>
-          <label className="block text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">
+          <label className="block text-[11px] font-semibold text-gray-400 mb-2 uppercase tracking-wider">
             Forecast Horizon
           </label>
           <div className="flex bg-[#2b2b2b] p-1 rounded-lg border border-[#444444]">
@@ -82,7 +82,7 @@ export default function ForecastStaffingScreen({ forecastData }) {
               <button
                 key={opt}
                 onClick={() => setHorizon(opt)}
-                className={`flex-1 py-1.5 rounded text-xs font-semibold uppercase transition-all ${
+                className={`flex-1 py-1.5 rounded text-xs font-semibold uppercase transition-all cursor-pointer ${
                   horizon === opt
                     ? 'bg-[#fcb712] text-black shadow'
                     : 'text-gray-400 hover:text-white'
@@ -97,7 +97,7 @@ export default function ForecastStaffingScreen({ forecastData }) {
         {/* Staff Ratio Slider */}
         <div>
           <div className="flex justify-between items-center mb-2">
-            <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+            <label className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
               Staffing Ratio
             </label>
             <span className="text-xs font-bold text-[#fcb712]">
@@ -115,14 +115,14 @@ export default function ForecastStaffingScreen({ forecastData }) {
         </div>
 
         {/* Department Filter */}
-        <div>
-          <label className="block text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">
+        <div className="sm:col-span-2 lg:col-span-1">
+          <label className="block text-[11px] font-semibold text-gray-400 mb-2 uppercase tracking-wider">
             Target Area
           </label>
           <select
             value={department}
             onChange={(e) => setDepartment(e.target.value)}
-            className="w-full bg-[#2b2b2b] text-white border border-[#444444] rounded-lg p-2 text-xs focus:ring-1 focus:ring-[#fcb712] focus:outline-none"
+            className="w-full bg-[#2b2b2b] text-white border border-[#444444] rounded-lg p-2 text-xs focus:ring-1 focus:ring-[#fcb712] focus:outline-none cursor-pointer"
           >
             <option value="all">All Departments</option>
             <option value="science">Science Area</option>
@@ -133,62 +133,62 @@ export default function ForecastStaffingScreen({ forecastData }) {
       </div>
 
       {/* KPI Cards Row */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Card 1 */}
-        <div className="bg-[#3b3b3b] p-5 rounded-lg border border-[#444444] shadow flex items-center gap-4">
-          <div className="p-3 bg-[#fcb712]/10 rounded-lg">
-            <Users className="h-6 w-6 text-[#fcb712]" />
+        <div className="bg-[#3b3b3b] p-4 sm:p-5 rounded-xl border border-[#444444] shadow flex items-center gap-3 sm:gap-4">
+          <div className="p-2.5 sm:p-3 bg-[#fcb712]/10 rounded-lg shrink-0">
+            <Users className="h-5 w-5 sm:h-6 sm:w-6 text-[#fcb712]" />
           </div>
-          <div>
-            <p className="text-xs font-medium text-gray-400 uppercase">Total Predicted Visitors</p>
-            <p className="text-2xl font-bold text-white">{stats.total}</p>
+          <div className="min-w-0">
+            <p className="text-[10px] sm:text-xs font-medium text-gray-400 uppercase truncate">Total Predicted Visitors</p>
+            <p className="text-xl sm:text-2xl font-bold text-white">{stats.total}</p>
           </div>
         </div>
 
         {/* Card 2 */}
-        <div className="bg-[#3b3b3b] p-5 rounded-lg border border-[#444444] shadow flex items-center gap-4">
-          <div className="p-3 bg-indigo-500/10 rounded-lg">
-            <Clock className="h-6 w-6 text-indigo-400" />
+        <div className="bg-[#3b3b3b] p-4 sm:p-5 rounded-xl border border-[#444444] shadow flex items-center gap-3 sm:gap-4">
+          <div className="p-2.5 sm:p-3 bg-indigo-500/10 rounded-lg shrink-0">
+            <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-indigo-400" />
           </div>
-          <div>
-            <p className="text-xs font-medium text-gray-400 uppercase">Peak Time & Count</p>
-            <p className="text-2xl font-bold text-white">
+          <div className="min-w-0">
+            <p className="text-[10px] sm:text-xs font-medium text-gray-400 uppercase truncate">Peak Time & Count</p>
+            <p className="text-xl sm:text-2xl font-bold text-white truncate">
               {stats.peakVal} <span className="text-xs font-medium text-gray-400">({stats.peakTime})</span>
             </p>
           </div>
         </div>
 
         {/* Card 3 */}
-        <div className="bg-[#3b3b3b] p-5 rounded-lg border border-[#444444] shadow flex items-center gap-4">
-          <div className="p-3 bg-emerald-500/10 rounded-lg">
-            <Sparkles className="h-6 w-6 text-emerald-400" />
+        <div className="bg-[#3b3b3b] p-4 sm:p-5 rounded-xl border border-[#444444] shadow flex items-center gap-3 sm:gap-4">
+          <div className="p-2.5 sm:p-3 bg-emerald-500/10 rounded-lg shrink-0">
+            <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400" />
           </div>
-          <div>
-            <p className="text-xs font-medium text-gray-400 uppercase">Peak Recommended Staff</p>
-            <p className="text-2xl font-bold text-white">{stats.recommendedStaff}</p>
+          <div className="min-w-0">
+            <p className="text-[10px] sm:text-xs font-medium text-gray-400 uppercase truncate">Peak Recommended Staff</p>
+            <p className="text-xl sm:text-2xl font-bold text-white">{stats.recommendedStaff}</p>
           </div>
         </div>
 
         {/* Card 4 */}
-        <div className="bg-[#3b3b3b] p-5 rounded-lg border border-[#444444] shadow flex items-center gap-4">
-          <div className="p-3 bg-rose-500/10 rounded-lg">
-            <AlertTriangle className="h-6 w-6 text-rose-400" />
+        <div className="bg-[#3b3b3b] p-4 sm:p-5 rounded-xl border border-[#444444] shadow flex items-center gap-3 sm:gap-4">
+          <div className="p-2.5 sm:p-3 bg-rose-500/10 rounded-lg shrink-0">
+            <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-rose-400" />
           </div>
-          <div>
-            <p className="text-xs font-medium text-gray-400 uppercase">Model Bounds</p>
-            <p className="text-2xl font-bold text-white">
-              ±15% <span className="text-xs font-medium text-gray-400">Confidence</span>
+          <div className="min-w-0">
+            <p className="text-[10px] sm:text-xs font-medium text-gray-400 uppercase truncate">Model Bounds</p>
+            <p className="text-xl sm:text-2xl font-bold text-white">
+              ±15% <span className="text-xs font-medium text-gray-400">Conf.</span>
             </p>
           </div>
         </div>
       </div>
 
       {/* Hourly Curve and Roster */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
         {/* Footfall Chart */}
-        <div className="lg:col-span-8 bg-[#3b3b3b] p-6 rounded-lg border border-[#444444] shadow-md">
-          <h3 className="text-lg font-semibold text-white mb-6">Hourly Forecast Curve</h3>
-          <div className="h-72 w-full">
+        <div className="lg:col-span-7 xl:col-span-8 bg-[#3b3b3b] p-4 sm:p-6 rounded-xl border border-[#444444] shadow-md">
+          <h3 className="text-base sm:text-lg font-semibold text-white mb-4 sm:mb-6">Hourly Forecast Curve</h3>
+          <div className="h-56 sm:h-64 lg:h-72 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
                 <defs>
@@ -240,37 +240,37 @@ export default function ForecastStaffingScreen({ forecastData }) {
         </div>
 
         {/* Suggested Shift Blocks */}
-        <div className="lg:col-span-4 bg-[#3b3b3b] p-6 rounded-lg border border-[#444444] shadow-md flex flex-col justify-between">
+        <div className="lg:col-span-5 xl:col-span-4 bg-[#3b3b3b] p-4 sm:p-6 rounded-xl border border-[#444444] shadow-md flex flex-col justify-between">
           <div>
-            <h3 className="text-lg font-semibold text-white mb-6">Suggested Shifts</h3>
-            <div className="space-y-4">
+            <h3 className="text-base sm:text-lg font-semibold text-white mb-4 sm:mb-6">Suggested Shifts</h3>
+            <div className="space-y-3 sm:space-y-4">
               {/* Shift 1 */}
-              <div className="p-4 bg-[#2b2b2b] rounded-lg border border-[#444444]">
+              <div className="p-3.5 sm:p-4 bg-[#2b2b2b] rounded-lg border border-[#444444]">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold text-[#fcb712] uppercase tracking-wider">
+                  <span className="text-[11px] font-bold text-[#fcb712] uppercase tracking-wider">
                     Morning Block
                   </span>
                   <span className="text-xs text-gray-400">08:30 AM - 01:30 PM</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-semibold text-white">Recommended Staff:</span>
-                  <span className="bg-[#fcb712]/10 text-[#fcb712] px-3 py-0.5 rounded text-sm font-bold border border-[#fcb712]/20">
+                  <span className="text-xs sm:text-sm font-semibold text-white">Recommended Staff:</span>
+                  <span className="bg-[#fcb712]/10 text-[#fcb712] px-2.5 sm:px-3 py-0.5 rounded text-xs sm:text-sm font-bold border border-[#fcb712]/20">
                     {Math.max(1, Math.ceil(stats.recommendedStaff * 0.7))} Staff
                   </span>
                 </div>
               </div>
 
               {/* Shift 2 */}
-              <div className="p-4 bg-[#2b2b2b] rounded-lg border border-[#444444]">
+              <div className="p-3.5 sm:p-4 bg-[#2b2b2b] rounded-lg border border-[#444444]">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider">
+                  <span className="text-[11px] font-bold text-indigo-400 uppercase tracking-wider">
                     Afternoon Block
                   </span>
                   <span className="text-xs text-gray-400">01:00 PM - 06:30 PM</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-semibold text-white">Recommended Staff:</span>
-                  <span className="bg-indigo-500/10 text-indigo-400 px-3 py-0.5 rounded text-sm font-bold border border-indigo-400/20">
+                  <span className="text-xs sm:text-sm font-semibold text-white">Recommended Staff:</span>
+                  <span className="bg-indigo-500/10 text-indigo-400 px-2.5 sm:px-3 py-0.5 rounded text-xs sm:text-sm font-bold border border-indigo-400/20">
                     {stats.recommendedStaff} Staff
                   </span>
                 </div>
@@ -279,8 +279,8 @@ export default function ForecastStaffingScreen({ forecastData }) {
           </div>
 
           <div className="mt-6 pt-4 border-t border-[#444444] text-[11px] text-gray-400 flex items-center gap-2">
-            <Calendar className="h-4 w-4" />
-            <span>Shift plan is synchronized with predicted peak time {stats.peakTime}</span>
+            <Calendar className="h-4 w-4 shrink-0" />
+            <span>Shift plan synchronized with predicted peak time {stats.peakTime}</span>
           </div>
         </div>
       </div>

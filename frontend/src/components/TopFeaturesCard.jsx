@@ -59,40 +59,40 @@ export default function TopFeaturesCard({ data }) {
   }, [featureData]);
 
   return (
-    <div className="bg-[#363636] p-4 2xl:p-6 rounded-xl border border-[#454545] shadow-lg flex flex-col justify-between">
-      {/* Header & Legend matching Figma Demo 4 */}
-      <div className="flex justify-between items-center mb-4 2xl:mb-6">
-        <h3 className="text-2xl md:text-2xl font-semibold font-roboto text-gray-100 leading-snug">Top Features</h3>
-        <div className="flex items-center gap-3 text-[11px] font-bold tracking-wider">
+    <div className="bg-[#363636] p-3.5 sm:p-5 rounded-xl border border-[#454545] shadow-lg flex flex-col justify-between">
+      {/* Header & Legend */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+        <h3 className="text-sm sm:text-base lg:text-lg font-semibold font-roboto text-gray-100 leading-snug">Top Features</h3>
+        <div className="flex flex-wrap items-center gap-3 text-[11px] font-bold tracking-wider">
           <div className="flex items-center gap-1.5">
-            <span className="h-3 w-3 rounded-full bg-[#7173E2]" />
-            <span className="text-lg font-light font-roboto text-white/40">ENGINEERED</span>
+            <span className="h-2.5 w-2.5 rounded-full bg-[#7173E2]" />
+            <span className="text-xs sm:text-sm font-medium font-roboto text-white/60">ENGINEERED</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="h-3 w-3 rounded-full bg-[#f9b233]" />
-            <span className="text-lg font-light font-roboto text-white/40">WEATHER</span>
+            <span className="h-2.5 w-2.5 rounded-full bg-[#f9b233]" />
+            <span className="text-xs sm:text-sm font-medium font-roboto text-white/60">WEATHER</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="h-3 w-3 rounded-full bg-[#e62b76]" />
-            <span className="text-lg font-light font-roboto text-white/40">CALENDAR</span>
+            <span className="h-2.5 w-2.5 rounded-full bg-[#e62b76]" />
+            <span className="text-xs sm:text-sm font-medium font-roboto text-white/60">CALENDAR</span>
           </div>
         </div>
       </div>
 
       {/* Content Layout: Donut + List */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
         {/* Donut Chart */}
-        <div className="md:col-span-4 h-40 lg:h-44 2xl:h-52 flex justify-center items-center">
+        <div className="sm:col-span-4 lg:col-span-3.5 h-32 sm:h-36 lg:h-36 flex justify-center items-center">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
                 data={pieChartData}
                 cx="50%"
                 cy="50%"
-                innerRadius={36}
-                outerRadius={66}
-                paddingAngle={6}
-                cornerRadius={5}
+                innerRadius={25}
+                outerRadius={46}
+                paddingAngle={4}
+                cornerRadius={3}
                 dataKey="value"
                 stroke="none"
               >
@@ -109,7 +109,7 @@ export default function TopFeaturesCard({ data }) {
                 content={({ active, payload }) => {
                   if (!active || !payload || !payload.length) return null;
                   const dataItem = payload[0].payload;
-                  if (dataItem.isOther) return null; // No tooltip for filler segment
+                  if (dataItem.isOther) return null;
                   return (
                     <div className="bg-[#242424] border border-[#555555] rounded-md px-3 py-2 text-xs text-white shadow-md">
                       <p className="font-semibold">{dataItem.name}</p>
@@ -123,17 +123,17 @@ export default function TopFeaturesCard({ data }) {
         </div>
 
         {/* Feature List */}
-        <div className="md:col-span-8 space-y-2">
+        <div className="sm:col-span-8 lg:col-span-8.5 space-y-1.5">
           {featureData.map((item, idx) => (
             <div
               key={idx}
-              className="flex justify-between items-center py-1.5 px-3 rounded-lg"
+              className="flex justify-between items-center py-1 px-2.5 rounded-lg bg-[#2b2b2b]/50 border border-[#444444]/40"
             >
-              <div className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-                <span className="text-md font-roboto font-medium">{item.name}</span>
+              <div className="flex items-center gap-2 min-w-0 pr-2">
+                <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
+                <span className="text-xs sm:text-sm font-roboto font-medium truncate">{item.name}</span>
               </div>
-              <span className="text-md font-roboto font-medium text-white">
+              <span className="text-xs sm:text-sm font-roboto font-semibold text-white shrink-0">
                 {item.value}%
               </span>
             </div>

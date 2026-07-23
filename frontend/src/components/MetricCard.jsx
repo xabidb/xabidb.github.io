@@ -21,23 +21,23 @@ export default function MetricCard({ title, value, unit = '', maxVal = 100, colo
   const percentage = Math.min(100, Math.max(0, (numVal / maxVal) * 100));
 
   return (
-    <div className="bg-[#363636] p-4 2xl:p-6 rounded-xl border border-[#454545] shadow-lg flex flex-col justify-between min-h-32 2xl:min-h-40">
-      <div className="flex justify-between items-start gap-4">
-        <h3 className="text-base lg:text-lg 2xl:text-2xl font-semibold font-roboto text-gray-100 leading-snug">{title}</h3>
-        <span className="text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl font-bold font-roboto text-white tracking-tight shrink-0">
+    <div className="bg-[#363636] p-3.5 sm:p-4 lg:p-5 rounded-xl border border-[#454545] shadow-lg flex flex-col justify-between min-h-28 sm:min-h-32">
+      <div className="flex justify-between items-start gap-2 sm:gap-4">
+        <h3 className="text-xs sm:text-sm lg:text-base font-semibold font-roboto text-gray-100 leading-snug">{title}</h3>
+        <span className="text-lg sm:text-2xl lg:text-3xl xl:text-4xl font-bold font-roboto text-white tracking-tight shrink-0">
           {value}
           {unit}
         </span>
       </div>
 
-      <div>
-        <div className="w-full bg-[#272727] h-2 rounded-full overflow-hidden mb-2">
+      <div className="mt-3">
+        <div className="w-full bg-[#272727] h-1.5 sm:h-2 rounded-full overflow-hidden mb-1.5 sm:mb-2">
           <div
             className={`h-full ${currentScheme.barBg} rounded-full transition-all duration-500`}
             style={{ width: `${percentage}%` }}
           />
         </div>
-        <div className="flex justify-between text-[11px] text-gray-400 font-medium px-0.5">
+        <div className="flex justify-between text-[10px] sm:text-[11px] text-gray-400 font-medium px-0.5">
           {currentScheme.ticks.map((t, idx) => (
             <span key={idx}>{t}</span>
           ))}

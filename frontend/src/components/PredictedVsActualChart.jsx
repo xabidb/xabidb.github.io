@@ -44,34 +44,34 @@ export default function PredictedVsActualChart({ data }) {
   }, [data, defaultRealModelData]);
 
   return (
-    <div className="bg-[#363636] p-4 2xl:p-6 rounded-xl border border-[#454545] shadow-lg">
-      {/* Header & Legend matching Figma Demo 4 */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 2xl:mb-6 gap-2">
+    <div className="bg-[#363636] p-3.5 sm:p-5 rounded-xl border border-[#454545] shadow-lg">
+      {/* Header & Legend */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
         <div>
-          <h3 className="text-lg lg:text-xl 2xl:text-2xl font-semibold font-roboto text-white leading-snug">
+          <h3 className="text-sm sm:text-base lg:text-lg font-semibold font-roboto text-white leading-snug">
             Predicted vs Actual Walk-Ins
           </h3>
-          <p className="text-xs lg:text-sm text-white/40 font-roboto font-light mt-1">
+          <p className="text-[11px] sm:text-xs text-white/50 font-roboto font-light mt-0.5">
             Currently displaying the best model's test split predictions vs actual walk-ins
           </p>
         </div>
 
-        <div className="flex items-center gap-5 text-[11px] font-bold tracking-wider">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-5 text-[11px] font-bold tracking-wider shrink-0">
           <div className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-[#edc24a]" />
-            <span className="text-xs sm:text-sm lg:text-base 2xl:text-lg font-light font-roboto text-white/40">ACTUAL WALK-INS</span>
+            <span className="h-2.5 w-2.5 rounded-full bg-[#edc24a]" />
+            <span className="text-xs sm:text-sm font-medium font-roboto text-white/60">ACTUAL WALK-INS</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-[#e62b76]" />
-            <span className="text-xs sm:text-sm lg:text-base 2xl:text-lg font-light font-roboto text-white/40">PREDICTED WALK-INS</span>
+            <span className="h-2.5 w-2.5 rounded-full bg-[#e62b76]" />
+            <span className="text-xs sm:text-sm font-medium font-roboto text-white/60">PREDICTED WALK-INS</span>
           </div>
         </div>
       </div>
 
       {/* 98-Day Holdout Test Split Composed Chart */}
-      <div className="h-56 lg:h-64 2xl:h-72 w-full">
+      <div className="h-48 sm:h-56 md:h-64 lg:h-72 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 20 }}>
+          <ComposedChart data={chartData} margin={{ top: 10, right: 10, left: -15, bottom: 15 }}>
             <defs>
               <linearGradient id="actualGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#edc24a" stopOpacity={0.2} />
@@ -82,13 +82,13 @@ export default function PredictedVsActualChart({ data }) {
             <XAxis
               dataKey="monthName"
               stroke="#999999"
-              fontSize={12}
+              fontSize={11}
               tickLine={false}
               axisLine={false}
               interval={14}
-              dy={15}
+              dy={10}
             />
-            <YAxis stroke="#999999" fontSize={12} tickLine={false} axisLine={false} domain={['auto', 'auto']} />
+            <YAxis stroke="#999999" fontSize={11} tickLine={false} axisLine={false} domain={['auto', 'auto']} />
             <Tooltip
               cursor={false}
               contentStyle={{
@@ -113,18 +113,18 @@ export default function PredictedVsActualChart({ data }) {
               type="monotone"
               dataKey="actual"
               stroke="#edc24a"
-              strokeWidth={2.5}
+              strokeWidth={2}
               fill="url(#actualGradient)"
               dot={false}
-              activeDot={{ r: 5, fill: '#edc24a' }}
+              activeDot={{ r: 4, fill: '#edc24a' }}
             />
             <Line
               type="monotone"
               dataKey="predicted"
               stroke="#e62b76"
-              strokeWidth={2.5}
+              strokeWidth={2}
               dot={false}
-              activeDot={{ r: 5, fill: '#e62b76' }}
+              activeDot={{ r: 4, fill: '#e62b76' }}
             />
           </ComposedChart>
         </ResponsiveContainer>

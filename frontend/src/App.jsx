@@ -27,6 +27,7 @@ function MainApp() {
   const [evalData72h, setEvalData72h] = useState(null);
   const [isRetraining, setIsRetraining] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Load health, real-time forecast, and evaluation data with 5s polling interval (only when logged in)
   useEffect(() => {
@@ -149,6 +150,8 @@ function MainApp() {
         activeScreen={activeScreen}
         setActiveScreen={setActiveScreen}
         isApiConnected={isApiConnected}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
       />
 
       {/* Main Content Area */}
@@ -159,14 +162,15 @@ function MainApp() {
           onRetrain={handleRetrain}
           isRetraining={isRetraining}
           onOpenLogin={() => setIsLoginOpen(true)}
+          onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
         />
 
         <main className="flex-1">
           {/* Screen 1: 24h Model Performance */}
           {activeScreen === '24h' && (
-            <div className="px-6 lg:px-10 2xl:px-16 pt-4 2xl:pt-6 pb-8 2xl:pb-20 space-y-4 2xl:space-y-6 w-full">
+            <div className="px-4 sm:px-6 lg:px-10 pt-4 sm:pt-6 pb-6 sm:pb-8 lg:pb-12 space-y-4 sm:space-y-6 w-full">
               {/* KPI Cards Row */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                 <MetricCard
                   title="Mean Absolute Error"
                   value={m24.mae}
@@ -192,7 +196,7 @@ function MainApp() {
               <PredictedVsActualChart data={evalData24h?.test_eval_points} />
 
               {/* Bottom Row: Model Comparison & Top Features */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 <ModelComparisonCard horizon="24h" metricsData={getComparisonData('24h')} />
                 <TopFeaturesCard data={evalData24h?.feature_importances} />
               </div>
@@ -201,9 +205,9 @@ function MainApp() {
 
           {/* Screen 1: 72h Model Performance */}
           {activeScreen === '72h' && (
-            <div className="px-6 lg:px-10 2xl:px-16 pt-4 2xl:pt-6 pb-8 2xl:pb-20 space-y-4 2xl:space-y-6 w-full">
+            <div className="px-4 sm:px-6 lg:px-10 pt-4 sm:pt-6 pb-6 sm:pb-8 lg:pb-12 space-y-4 sm:space-y-6 w-full">
               {/* KPI Cards Row */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                 <MetricCard
                   title="Mean Absolute Error"
                   value={m72.mae}
@@ -229,7 +233,7 @@ function MainApp() {
               <PredictedVsActualChart data={evalData72h?.test_eval_points} />
 
               {/* Bottom Row: Model Comparison & Top Features */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 <ModelComparisonCard horizon="72h" metricsData={getComparisonData('72h')} />
                 <TopFeaturesCard data={evalData72h?.feature_importances} />
               </div>
